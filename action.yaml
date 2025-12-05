@@ -51,15 +51,22 @@ inputs:
     description: 'Lenth of time before build failure'
     required: false
     default: 600
+  archetype:
+    description: 'Architecture requested'
+    required: false
+    default: ''
+  req_check_only:
+    description: 'Utilize ACT only for requirements check'
+    required: false
+    default: false
   
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/arcalot/arcaflow-container-toolkit:v1.2.1'
+  image: 'docker://ghcr.io/jdowni000/arcaflow-container-toolkit:v0.0.1'
   args:
-    - 'buildx' 
+    - 'build' 
     - '--build'
     - '--push'
-    - '--platform linux/amd64,linux/arm64,linux/arm/v7'
   env:
     IMAGE_NAME: ${{ inputs.image_name }}
     IMAGE_TAG: ${{ inputs.image_tag }}
@@ -72,3 +79,5 @@ runs:
     QUAY_CUSTOM_NAMESPACE: ${{ inputs.quay_custom_namespace }}
     QUAY_IMG_EXP: ${{ inputs.quay_img_exp }}
     BUILD_TIMEOUT: ${{ inputs.build_timeout }}
+    ARCHETYPE: ${{ inputs.archetype }}
+    REQ_CHECK_ONLY: ${{ inputs.req_check_only }}
